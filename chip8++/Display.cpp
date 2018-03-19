@@ -1,4 +1,6 @@
 #include "Display.h"
+#include <iostream>
+#include <string>
 
 namespace Display
 {
@@ -16,6 +18,7 @@ namespace Display
 	void Chip8Display::Clear()
 	{
 		framebuffer.fill(0b00000000);
+		printFramebuffer();
 	}
 
 	std::uint8_t Display::Chip8Display::DrawSprite(std::uint8_t x, std::uint8_t y, std::array<std::uint8_t, 15> sprite, std::uint8_t length)
@@ -53,6 +56,7 @@ namespace Display
 				framebuffer[resolved_coord] = framebuffer[resolved_coord] ^ sprite[i];
 			}
 		}
+		printFramebuffer();
 		return collision_flag;
 	}
 
@@ -65,5 +69,37 @@ namespace Display
 	void Display::Chip8Display::write(std::uint16_t addr, std::uint8_t data)
 	{
 		if (addr < size_framebuffer) { framebuffer[addr] = data; }
+	}
+
+	void Display::Chip8Display::printFramebuffer()
+	{
+		//print the framebuffer
+		std::string eight_pixels = "";
+		for (std::uint16_t i = 0; i < 32; i++)
+		{
+			for (std::uint16_t j = 0; j < 8; j++)
+			{
+				std::uint8_t bits = framebuffer[i * 8 + j];
+				if ((bits & 0b10000000) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b01000000) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b00100000) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b00010000) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b00001000) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b00000100) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b00000010) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+				if ((bits & 0b00000001) > 0) { eight_pixels += "0"; }
+				else { eight_pixels += "_"; }
+			}
+			eight_pixels += "\n";
+		}
+		std::cout << eight_pixels;
+		std::cout << "\n\n";
 	}
 }

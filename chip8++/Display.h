@@ -24,6 +24,7 @@ namespace Display
 		std::uint8_t DrawSprite(std::uint8_t x, std::uint8_t y, std::array<std::uint8_t, 15> sprite, std::uint8_t length);
 		std::uint8_t read(std::uint16_t addr);
 		void write(std::uint16_t addr, std::uint8_t data);
+		void printFramebuffer();
 
 	};
 }

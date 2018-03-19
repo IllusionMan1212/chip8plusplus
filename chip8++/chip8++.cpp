@@ -2,9 +2,9 @@
 #include "Memory.h"
 #include "Display.h"
 #include <iostream>
-#include <bitset>
 #include <string>
 #include <fstream>
+#include <thread>
 
 
 int main(int numArgs, char* args[])
@@ -38,7 +38,7 @@ int main(int numArgs, char* args[])
 	while (status == CPU::RETURN_CODES::OK)
 	{
 		status = cpu.Execute_Step();
-
+		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 	}
 	
 	//print the framebuffer
